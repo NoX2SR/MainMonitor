@@ -103,3 +103,9 @@ The checked-in `.vscode` configuration points IntelliSense at the Debian Arduino
 - Confirm pulses per engine revolution, shaft magnets, final-drive ratio, and tire circumference.
 - Decide what the monitor should do with one bad duplicate, a missing node, or stale values.
 - Validate RS-485 termination, biasing, grounding, and transient protection on the motorcycle.
+
+## License
+
+This project is source-available under the [PolyForm Noncommercial License 1.0.0](LICENSE). Noncommercial study, experimentation, modification, and sharing are permitted under its terms. Commercial use requires a separate written license from NoX2SR. See [NOTICE](NOTICE).
+
+Third-party components remain under their own licenses.
