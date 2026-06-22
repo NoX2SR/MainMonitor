@@ -10,7 +10,7 @@ class SensorHandler
 {
     //constructor
  public:
-    SensorHandler(int _DEREControlPin, int _boundRate);
+    SensorHandler(int _DEREControlPin, unsigned long _boundRate);
 	//Sends request to all sensors and store their respond to local variables.
     void RefreshVariables();
 	//Returns curent gear number (0-5)
@@ -31,7 +31,7 @@ class SensorHandler
  private:
 	void RefreshAllConverterVariables();
 	void RefreshAllFromGearSensor();
-	void RefreshAllFromFreqSensor() //TODO: Add error correct if receive ZERO once.
+	void RefreshAllFromFreqSensor(); //TODO: Add error correct if receive ZERO once.
 	void DeserializeFreq1Data(char* id, float value1, float value2);
 	void DeserializeFreq2Data(char* id, float value1, float value2);
 	void DeserializeOilPreasure(char* id,char* value1,char* value2);
@@ -39,12 +39,11 @@ class SensorHandler
 	void DeserializeEngineTempData(char* id,char* value1,char* value2);
 	void DeserializeGearData(char* id, char* valueGear1, char* valueWarning1, char* valueGear2, char* valueWarning2);
 	void SerialFlush();
-	float ByteArrayToFloat(byte* pointerToArray);
+	char* SubStr(char* input_string, int segment_number);
+	float ByteArrayToFloat(char* pointerToArray);
 	float GetCelsiusFromVoltege(float voltage);
 };
 #endif
-
-
 
 
 

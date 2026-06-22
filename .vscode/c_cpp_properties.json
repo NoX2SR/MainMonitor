@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "name": "Arduino Uno",
+      "compilerPath": "/usr/bin/avr-g++",
+      "compilerArgs": ["-mmcu=atmega328p"],
+      "includePath": [
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/SensorHandler",
+        "/usr/share/arduino/hardware/arduino/avr/cores/arduino",
+        "/usr/share/arduino/hardware/arduino/avr/variants/standard"
+      ],
+      "defines": [
+        "ARDUINO=10819",
+        "ARDUINO_ARCH_AVR",
+        "ARDUINO_AVR_UNO",
+        "F_CPU=16000000L"
+      ],
+      "cStandard": "gnu11",
+      "cppStandard": "gnu++11"
+    }
+  ],
+  "version": 4
+}

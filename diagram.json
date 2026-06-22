@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "author": "NoX2SR",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-arduino-uno",
+      "id": "uno",
+      "top": 70,
+      "left": 20,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "txEnable",
+      "top": 250,
+      "left": 390,
+      "attrs": { "color": "red", "label": "RS-485 TX enable" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "txLedResistor",
+      "top": 250,
+      "left": 330,
+      "rotate": 90,
+      "attrs": { "value": "330" }
+    },
+    {
+      "type": "wokwi-logic-analyzer",
+      "id": "logic",
+      "top": 35,
+      "left": 580,
+      "attrs": {
+        "channelNames": "UART_RX,UART_TX,DE_RE,D3,D4,D5,D6,D7"
+      }
+    }
+  ],
+  "connections": [
+    [ "uno:8", "txLedResistor:1", "red", [] ],
+    [ "txLedResistor:2", "txEnable:A", "red", [] ],
+    [ "txEnable:C", "uno:GND.2", "black", [] ],
+    [ "uno:0", "logic:D0", "green", [] ],
+    [ "uno:1", "logic:D1", "blue", [] ],
+    [ "uno:8", "logic:D2", "red", [] ],
+    [ "logic:GND", "uno:GND.3", "black", [] ]
+  ],
+  "serialMonitor": {
+    "display": "always",
+    "newline": "none",
+    "convertEol": false
+  }
+}

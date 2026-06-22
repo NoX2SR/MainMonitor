@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Motorcycle Arduino sensor network</title>
+  <desc id="desc">Gear and RPM sensors feed two Arduino Uno boards. The boards communicate over an RS-485 bus with a MainMonitor Uno whose handler is present but not called by the empty sketch.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101827"/>
+      <stop offset="1" stop-color="#17243a"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#69d2e7"/>
+    </marker>
+    <style>
+      .title { font: 700 30px sans-serif; fill: #f7fbff; }
+      .subtitle { font: 400 15px sans-serif; fill: #adc1d8; }
+      .box-title { font: 700 20px sans-serif; fill: #f7fbff; }
+      .body { font: 400 14px sans-serif; fill: #d6e3ef; }
+      .small { font: 400 12px sans-serif; fill: #aabed2; }
+      .mono { font: 600 13px monospace; fill: #fff2b3; }
+      .wire { fill: none; stroke: #69d2e7; stroke-width: 3; marker-end: url(#arrow); }
+      .sensor { fill: #263d5b; stroke: #58789c; stroke-width: 2; }
+      .board { fill: #164e63; stroke: #49b8c7; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <text x="60" y="58" class="title">Motorcycle sensor network</text>
+  <text x="60" y="84" class="subtitle">Current buildable behavior, Arduino Uno / ATmega328P, 115200 baud</text>
+
+  <g>
+    <rect x="55" y="125" width="250" height="210" rx="16" class="sensor"/>
+    <text x="80" y="160" class="box-title">Physical inputs</text>
+    <text x="80" y="197" class="body">Gear up / down switches</text>
+    <text x="80" y="225" class="body">Neutral switch</text>
+    <text x="80" y="253" class="body">Engine + outside temperature</text>
+    <text x="80" y="281" class="body">Oil pressure switch</text>
+    <text x="80" y="309" class="small">Digital 2, 3, 4; analog A0, A1, A2</text>
+
+    <rect x="380" y="125" width="300" height="210" rx="16" class="board"/>
+    <text x="405" y="160" class="box-title">GearSensor Uno</text>
+    <text x="405" y="197" class="body">Tracks neutral and gears 1 through 5</text>
+    <text x="405" y="225" class="body">Latches an invalid-shift warning</text>
+    <text x="405" y="253" class="body">Reads temperatures and oil pressure</text>
+    <text x="405" y="286" class="mono">Commands: AA, AB, AC, AD, AE</text>
+    <text x="405" y="312" class="small">RS-485 DE/RE control: digital 8</text>
+
+    <rect x="55" y="405" width="250" height="170" rx="16" class="sensor"/>
+    <text x="80" y="440" class="box-title">Rotational inputs</text>
+    <text x="80" y="477" class="body">Engine optocoupler pulses</text>
+    <text x="80" y="505" class="body">Drive-shaft reed switch pulses</text>
+    <text x="80" y="539" class="small">Digital 2 and 3</text>
+
+    <rect x="380" y="405" width="300" height="170" rx="16" class="board"/>
+    <text x="405" y="440" class="box-title">RPMReader Uno</text>
+    <text x="405" y="477" class="body">Timer2 samples both inputs at 8 kHz</text>
+    <text x="405" y="505" class="body">Returns each float twice for validation</text>
+    <text x="405" y="538" class="mono">Command: Q</text>
+  </g>
+
+  <path d="M305 230 H370" class="wire"/>
+  <path d="M305 490 H370" class="wire"/>
+
+  <line x1="735" y1="185" x2="735" y2="520" stroke="#f1c75b" stroke-width="8" stroke-linecap="round"/>
+  <text x="710" y="555" class="mono" transform="rotate(-90 710 555)">HALF-DUPLEX RS-485 BUS</text>
+  <path d="M680 230 H725" class="wire"/>
+  <path d="M680 490 H725" class="wire"/>
+
+  <g>
+    <rect x="805" y="225" width="340" height="250" rx="16" fill="#47366b" stroke="#9a7bd1" stroke-width="2"/>
+    <text x="835" y="265" class="box-title">MainMonitor Uno</text>
+    <text x="835" y="305" class="body">SensorHandler can request both nodes</text>
+    <text x="835" y="333" class="body">and validate duplicated values.</text>
+    <text x="835" y="374" class="body">Calculates RPM, speed, temperatures,</text>
+    <text x="835" y="402" class="body">gear warning, and oil-pressure state.</text>
+    <rect x="830" y="426" width="290" height="31" rx="8" fill="#2c2242" stroke="#d2b8ff" stroke-dasharray="6 5"/>
+    <text x="848" y="447" class="small">Current setup() and loop() are empty</text>
+  </g>
+  <path d="M745 350 H795" class="wire"/>
+
+  <rect x="55" y="630" width="1090" height="48" rx="12" fill="#0d1421" stroke="#31445b"/>
+  <text x="77" y="660" class="small">Protocol values are duplicated for basic validation. The present implementation is buildable but remains a prototype, as its original TODOs indicate.</text>
+</svg>

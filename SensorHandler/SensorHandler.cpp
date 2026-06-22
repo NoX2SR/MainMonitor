@@ -6,6 +6,9 @@
 #include <Arduino.h>
 #include <SensorHandler.h>
 
+#include <stdlib.h>
+#include <string.h>
+
 #define gearSensorID 'A'
 #define gearSensorAll 'A'
 
@@ -14,13 +17,13 @@
 
 #define aditionalWAit 180
 
-float dimeterOfBackTire = 80.0 //cm
+float dimeterOfBackTire = 80.0; //cm
 
-int boundRate = 115200;
+unsigned long boundRate = 115200;
 int DEREControlPin = 8; //RS-485 Controling Pin
 int currnetGear = 0;
 bool gearWarning = false;
-char* separator = ":";
+const char* separator = ":";
 
 float tempEngine = 0.0;
 float tempOut = 0.0;
@@ -31,13 +34,14 @@ bool oilPreasureLow = true;
 
 String output = "";
 //Variables for converter
-char *sensorId = "";
+char emptySensorId[] = "";
+char *sensorId = emptySensorId;
 float fValue1 = 0.0;
 float fValue2 = 0.0;
 ///
 ///REGION: Constructors.
 ///
-SensorHandler::SensorHandler(int _DEREControlPin, int _boundRate);
+SensorHandler::SensorHandler(int _DEREControlPin, unsigned long _boundRate)
 {
 	DEREControlPin = _DEREControlPin;
 	boundRate = _boundRate;
@@ -102,7 +106,7 @@ bool SensorHandler::GetOilPreasure()
 ///
 void SensorHandler::RefreshAllConverterVariables()
 {
-  sensorId = "";
+  sensorId = emptySensorId;
   fValue1 = 0.0;
   fValue2 = 0.0;
 }
@@ -124,9 +128,9 @@ void SensorHandler::RefreshAllFromGearSensor()
 
   int massageLength = 45;
 
-  delay((massageLength * 8 * 1000) / BoundRate + aditionalWAit);
+	delay((massageLength * 8 * 1000) / boundRate + aditionalWAit);
 
-  byte receivedBytes[massageLength];
+	char receivedBytes[massageLength];
   int i = 0;
   while (Serial.available() > 0 )
   {
@@ -172,9 +176,9 @@ void SensorHandler::RefreshAllFromFreqSensor() //TODO: Add error correct if rece
 
   int massageLength = 19;
 
-  delay(((massageLength * 8 * 1000) / BoundRate) + aditionalWAit);
+	delay(((massageLength * 8 * 1000) / boundRate) + aditionalWAit);
 
-  byte receivedBytes[massageLength];
+	char receivedBytes[massageLength];
   int i = 0;
   while (Serial.available() > 0 )
   {
@@ -264,7 +268,7 @@ void SensorHandler::DeserializeGearData(char* id, char* valueGear1, char* valueW
       bWarning1 = false;
     }
     bool bWarning2;
-    if (*valueWarning1 == '1')
+    if (*valueWarning2 == '1')
     {
       bWarning2 = true;
     }
@@ -274,7 +278,7 @@ void SensorHandler::DeserializeGearData(char* id, char* valueGear1, char* valueW
     }
     if (bWarning1 == bWarning2)
     {
-      gearwarning = bWarning1;
+		  gearWarning = bWarning1;
     }
   }
 }
@@ -326,7 +330,7 @@ char* SensorHandler::SubStr (char* input_string, int segment_number)
   return sub;
 }
 
-float SensorHandler::ByteArrayToFloat(byte* pointerToArray)
+float SensorHandler::ByteArrayToFloat(char* pointerToArray)
 {
   union u_tag {
     byte b[4];
@@ -344,7 +348,7 @@ float SensorHandler::ByteArrayToFloat(byte* pointerToArray)
 void SensorHandler::SerialFlush()
 {
   while (Serial.available() > 0) {
-    char t = Serial.read();
+    (void) Serial.read();
   }
 }
 

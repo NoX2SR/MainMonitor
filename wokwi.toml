@@ -1,0 +1,4 @@
+[wokwi]
+version = 1
+firmware = 'build/firmware/MainMonitor.ino.hex'
+elf = 'build/firmware/MainMonitor.ino.elf'
